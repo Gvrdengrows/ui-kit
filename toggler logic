@@ -4,10 +4,11 @@ import styles from './Toggler.module.scss';
 interface Props {
   togglers: string[];
   onToggle: (toggleIndex: number) => any;
+  isMobileAdapt?: boolean;
 }
 
 const Toggler = forwardRef(function Toggler(
-  { togglers, onToggle }: Props,
+  { togglers, onToggle, isMobileAdapt = false }: Props,
   ref
 ) {
   const percent = 100 / togglers.length;
@@ -21,7 +22,7 @@ const Toggler = forwardRef(function Toggler(
   const [isMobile, setIsMobile] = useState<boolean>();
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 1200);
+    setIsMobile(window.innerWidth < 967);
   }, []);
 
   const handleClick = (toggleIndex: number) => {
@@ -39,11 +40,11 @@ const Toggler = forwardRef(function Toggler(
     };
   });
 
-  return isMobile ? (
-    <div className={styles.toggler}>
+  return isMobileAdapt && isMobile ? (
+    <div className={styles.toggler_mobile}>
       {togglers.map((toggle, i) => (
         <div
-          className={`${styles.toggler__item} ${activeToggle === i ? styles.toggler__item_active : styles.toggler__item_unactive}`}
+          className={`${styles.toggler_mobile__item} ${activeToggle === i ? styles.toggler_mobile__item_active : styles.toggler_mobile__item_unactive}`}
           onClick={() => handleClick(i)}
           key={i}
         >
@@ -73,3 +74,74 @@ const Toggler = forwardRef(function Toggler(
 });
 
 export default Toggler;
+
+
+
+.toggler {
+    display: flex;
+    padding: 12px 0;
+    position: relative;
+    border-radius: 32px;
+    border: 1px solid #EEF1F4;
+    width: fit-content;
+
+    &__item {
+        display: grid;
+        place-items: center;
+        z-index: 1;
+        cursor: pointer;
+        font-weight: 500;
+        color: #27303E;
+        width: 200px;
+    }
+}
+
+.active {
+    top: -4px;
+    height: 56px;
+    z-index: 0;
+    padding: 16px;
+    color: #EEF1F4;
+    transition: 0.3s;
+    position: absolute;
+    border-radius: 32px;
+    background: #EEF1F4;
+}
+
+.carousel {
+    overflow: scroll;
+    height: 66px;
+    scrollbar-width: none;
+    display: flex;
+    align-items: center;
+}
+
+
+.toggler_mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    position: relative;
+    border-radius: 0;
+    border: none;
+    width: auto;
+
+    &__item {
+        display: block;
+        z-index: 1;
+        cursor: pointer;
+        font-weight: 300;
+        color: #27303E;
+        width: fit-content;
+        background-color: #EEF1F4;
+        padding: 3px 16px;
+        line-height: 26px;
+        border-radius: 16px;
+
+        &_active {
+            background-color: #27303E;
+            color: #FFF;
+        }
+    }
+}
