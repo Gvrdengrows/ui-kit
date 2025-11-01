@@ -4,7 +4,7 @@ import styles from "./Tabs.module.scss";
 interface Props {
   togglers: string[];
   onToggle: (toggleIndex: number) => void;
-  mode?: "classic" | "buttons";
+  mode?: "classic" | "buttons" | "squared";
 }
 
 const Tabs = forwardRef(function Toggler(
