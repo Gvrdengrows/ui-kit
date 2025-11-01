@@ -1,4 +1,4 @@
-.toggler {
+.tabs {
     display: flex;
     padding: 12px 0;
     position: relative;
@@ -37,7 +37,7 @@
 }
 
 
-.toggler_mobile {
+.tabs_mobile {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;

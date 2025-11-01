@@ -1,5 +1,5 @@
 import s from "./App.module.scss";
-import Toggler from "./components/Toggler/Toggler";
+import Tabs from "./components/Tabs/Tabs";
 
 const App = () => {
   const onToggle = (index: number) => {
@@ -8,7 +8,18 @@ const App = () => {
   return (
     <>
       <div className={s.app}>
-        <Toggler onToggle={onToggle} togglers={["Игры", "кино", "музыка"]} />
+        <div>
+          Without mobile adapt
+          <Tabs onToggle={onToggle} togglers={["Игры", "кино", "музыка"]} />
+        </div>
+        <div>
+          With mobile adapt
+          <Tabs
+            mode="buttons"
+            onToggle={onToggle}
+            togglers={["Игры", "кино", "музыка"]}
+          />
+        </div>
       </div>
     </>
   );

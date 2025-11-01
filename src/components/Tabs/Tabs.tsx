@@ -1,14 +1,14 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import styles from "./Toggler.module.scss";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import styles from "./Tabs.module.scss";
 
 interface Props {
   togglers: string[];
   onToggle: (toggleIndex: number) => void;
-  isMobileAdapt?: boolean;
+  mode?: "classic" | "buttons";
 }
 
-const Toggler = forwardRef(function Toggler(
-  { togglers, onToggle, isMobileAdapt = false }: Props,
+const Tabs = forwardRef(function Toggler(
+  { togglers, onToggle, mode = "classic" }: Props,
   ref
 ) {
   const percent = 100 / togglers.length;
@@ -19,11 +19,6 @@ const Toggler = forwardRef(function Toggler(
     left: calculatePosition(0),
   });
   const [activeToggle, setActiveToggle] = useState<number>(0);
-  const [isMobile, setIsMobile] = useState<boolean>();
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 967);
-  }, []);
 
   const handleClick = (toggleIndex: number) => {
     onToggle(toggleIndex);
@@ -40,14 +35,14 @@ const Toggler = forwardRef(function Toggler(
     };
   });
 
-  return isMobileAdapt && isMobile ? (
-    <div className={styles.toggler_mobile}>
+  return mode === "buttons" ? (
+    <div className={styles.tabs_mobile}>
       {togglers.map((toggle, i) => (
         <div
-          className={`${styles.toggler_mobile__item} ${
+          className={`${styles.tabs_mobile__item} ${
             activeToggle === i
-              ? styles.toggler_mobile__item_active
-              : styles.toggler_mobile__item_unactive
+              ? styles.tabs_mobile__item_active
+              : styles.tabs_mobile__item_unactive
           }`}
           onClick={() => handleClick(i)}
           key={i}
@@ -58,10 +53,10 @@ const Toggler = forwardRef(function Toggler(
     </div>
   ) : (
     <div className={styles.carousel}>
-      <div className={styles.toggler}>
+      <div className={styles.tabs}>
         {togglers.map((toggle, i) => (
           <div
-            className={`${styles.toggler__item}`}
+            className={`${styles.tabs__item}`}
             onClick={() => handleClick(i)}
             key={i}
           >
@@ -77,4 +72,4 @@ const Toggler = forwardRef(function Toggler(
   );
 });
 
-export default Toggler;
+export default Tabs;
